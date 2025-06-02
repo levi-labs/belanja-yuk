@@ -5,7 +5,7 @@ import { Location } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { Edit } from 'lucide-react';
 import React from 'react';
-import FormDelete from '../categories/_components/form-delete';
+import FormDelete from './_components/form-delete'; // Adjust the import path as necessary
 import Link from 'next/link';
 
 export const columns: ColumnDef<Location>[] = [

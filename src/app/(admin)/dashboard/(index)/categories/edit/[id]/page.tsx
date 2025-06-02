@@ -1,24 +1,24 @@
-import React from "react";
-import { getCategoryById } from "../../lib/data";
-import { redirect } from "next/navigation";
-import FormCategory from "../../_components/form-category";
+import React from 'react';
+import { getCategoryById } from '../../lib/data';
+import { redirect } from 'next/navigation';
+import FormCategory from '../../_components/form-category';
 
 type Tparams = {
-	id: string;
+  id: string;
 };
 
 interface EditPageProp {
-	params: Tparams;
+  params: Tparams;
 }
 
 export default async function EditPage({ params }: EditPageProp) {
-	const data = await getCategoryById(params.id);
+  const data = await getCategoryById(params.id);
 
-	if (!data) {
-		return redirect("/dashboard/categories");
-	}
+  if (!data) {
+    return redirect('/dashboard/categories');
+  }
 
-	console.log(data);
+  console.log(data);
 
-	return <FormCategory type="EDIT" data={data} />;
+  return <FormCategory type='EDIT' data={data} />;
 }
