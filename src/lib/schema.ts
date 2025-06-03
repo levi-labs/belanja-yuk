@@ -42,3 +42,57 @@ export const schemaBrand = schemaCategory.extend({
       message: 'Image is required',
     }),
 });
+
+export const schemaProduct = z.object({
+  name: z
+    .string({
+      required_error: 'Name is required',
+    })
+    .min(4, {
+      message: 'Name should have min 4 characters',
+    }),
+  description: z.string({
+    required_error: 'Description is required',
+  }),
+  price: z.string({
+    required_error: 'Price is required',
+  }),
+  stok: z.string({
+    required_error: 'Stok is required',
+  }),
+  category_id: z.string({ required_error: 'Category is required' }),
+  brand_id: z.string({ required_error: 'Brand is required' }),
+  location_id: z.string({ required_error: 'Location is required' }),
+  image: z
+    .any()
+    .refine((files: File[]) => files.length === 3, {
+      message: 'At least 3 images are required',
+    })
+    .refine(
+      (files: File[]) => {
+        let validate = false;
+
+        Array.from(files).find((file: File) => {
+          validate = ALLOWED_IMAGE_TYPES.includes(file.type);
+        });
+
+        return validate;
+      },
+      {
+        message: 'Uploaded file is not an image.',
+      }
+    ),
+  // .refine((files: File[]) => files.every((file: File) => file?.name), {
+  //   message: 'All images are required',
+  // }),
+});
+
+export const schemaProductEdit = schemaProduct
+  .extend({
+    id: z.number({
+      required_error: 'Product ID is required',
+    }),
+  })
+  .omit({
+    image: true,
+  });

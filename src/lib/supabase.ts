@@ -3,10 +3,13 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
-export const getImageUrl = (imagePath: string) => {
+export const getImageUrl = (
+  imagePath: string,
+  path: 'brands' | 'products' = 'brands'
+) => {
   const { data } = supabase.storage
     .from('lapak-syariah')
-    .getPublicUrl(`public/brands/${imagePath}`);
+    .getPublicUrl(`public/${path}/${imagePath}`);
 
   return data.publicUrl;
 };
