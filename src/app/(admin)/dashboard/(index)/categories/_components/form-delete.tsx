@@ -29,16 +29,16 @@ export default function FormDelete({ id }: FormDeleteProps) {
   const deleteCategoryWithId = (_: unknown, formData: FormData) =>
     deleteCategory(_, formData, id);
 
-  const [state, formAction] = useFormState(deleteCategoryWithId, initialState);
+  const [, formAction] = useFormState(deleteCategoryWithId, initialState);
 
   return (
     <form action={formAction}>
       <SubmitButton />
-      {state.error && (
+      {/* {state.error !== '' && (
         <div className='text-red-500 mt-2'>
           <p>{state.error}</p>
         </div>
-      )}
+      )} */}
     </form>
   );
 }
