@@ -96,3 +96,13 @@ export const schemaProductEdit = schemaProduct
   .omit({
     image: true,
   });
+
+export const schemaSignUp = schemaSignIn.extend({
+  name: z
+    .string({
+      required_error: 'Name is required',
+    })
+    .min(4, {
+      message: 'Name should have min 4 characters',
+    }),
+});

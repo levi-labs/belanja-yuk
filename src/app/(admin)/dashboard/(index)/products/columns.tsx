@@ -1,7 +1,7 @@
 'use client';
 import { getImageUrl } from '@/lib/supabase';
 import { dateFormat, rupiahFormat } from '@/lib/utils';
-import { Product, ProductStock } from '@prisma/client';
+import { ProductStock } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
@@ -29,7 +29,7 @@ export const columns: ColumnDef<TColumn>[] = [
     cell: ({ row }) => {
       const product = row.original;
       return (
-        <div className='inline-flex items-center gap-5'>
+        <div className='lg:inline-flex items-center gap-5'>
           <Image
             src={getImageUrl(product.images_url[0], 'products')}
             alt={`Logo of ${product.name}`}
@@ -46,7 +46,11 @@ export const columns: ColumnDef<TColumn>[] = [
     header: 'Price',
     cell: ({ row }) => {
       const product = row.original;
-      return <span>{rupiahFormat(Number(product.price))}</span>;
+      return (
+        <div className='w-24 text-center break-words md:w-full md:inline-flex items-center gap-2'>
+          <span className='text-sm'>{rupiahFormat(Number(product.price))}</span>
+        </div>
+      );
     },
   },
   {
@@ -71,6 +75,8 @@ export const columns: ColumnDef<TColumn>[] = [
   },
   {
     id: 'actions',
+    header: 'Actions',
+
     cell: ({ row }) => {
       const product = row.original;
       return (

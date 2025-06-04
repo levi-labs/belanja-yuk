@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -17,9 +18,16 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import FormLogout from './form-logout';
+import { log } from 'console';
+import { usePathname } from 'next/navigation';
 // import FormLogout from './form-logout';
 
 export default function Sidebar() {
+  //check the current path to highlight the active link
+  const currentPath = usePathname();
+  console.log('Current Path:', currentPath);
+  const isActive = (path: string) => currentPath === path;
+
   return (
     <TooltipProvider>
       <aside className='fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex'>
@@ -47,7 +55,12 @@ export default function Sidebar() {
             <TooltipTrigger asChild>
               <Link
                 href='/dashboard/categories'
-                className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+                className={
+                  `flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ` +
+                  (isActive('/dashboard/categories')
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground')
+                }
               >
                 <Archive className='h-5 w-5' />
                 <span className='sr-only'>Categories</span>
@@ -59,7 +72,12 @@ export default function Sidebar() {
             <TooltipTrigger asChild>
               <Link
                 href='/dashboard/locations'
-                className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+                className={
+                  'flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ' +
+                  (isActive('/dashboard/locations')
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground')
+                }
               >
                 <MapPin className='h-5 w-5' />
                 <span className='sr-only'>Locations</span>
@@ -71,7 +89,12 @@ export default function Sidebar() {
             <TooltipTrigger asChild>
               <Link
                 href='/dashboard/brands'
-                className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+                className={
+                  `flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ` +
+                  (isActive('/dashboard/brands')
+                    ? 'bg-accent text-accent-foreground'
+                    : ' text-muted-foreground')
+                }
               >
                 <Building className='h-5 w-5' />
                 <span className='sr-only'>brands</span>
@@ -83,7 +106,12 @@ export default function Sidebar() {
             <TooltipTrigger asChild>
               <Link
                 href='/dashboard/products'
-                className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+                className={
+                  `flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ` +
+                  (isActive('/dashboard/products')
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground')
+                }
               >
                 <Package className='h-5 w-5' />
                 <span className='sr-only'>Products</span>
@@ -95,7 +123,12 @@ export default function Sidebar() {
             <TooltipTrigger asChild>
               <Link
                 href='/dashboard/orders'
-                className='flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+                className={
+                  `flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ` +
+                  (isActive('/dashboard/orders')
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground')
+                }
               >
                 <ShoppingCart className='h-5 w-5' />
                 <span className='sr-only'>Orders</span>
@@ -107,7 +140,12 @@ export default function Sidebar() {
             <TooltipTrigger asChild>
               <Link
                 href='/dashboard/customers'
-                className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+                className={
+                  `flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ` +
+                  (isActive('/dashboard/customers')
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground')
+                }
               >
                 <Users2 className='h-5 w-5' />
                 <span className='sr-only'>Customers</span>
