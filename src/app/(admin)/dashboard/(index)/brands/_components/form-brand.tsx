@@ -59,7 +59,7 @@ export default function FormBrand({
               Brand Form
             </h1>
             <div className='hidden items-center gap-2 md:ml-auto md:flex'>
-              <Button variant='outline' size='sm'>
+              <Button variant='outline' size='sm' type='button'>
                 Discard
               </Button>
               <SubmitButton />

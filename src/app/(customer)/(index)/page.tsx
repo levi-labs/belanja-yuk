@@ -4,6 +4,7 @@ import Navbar from './_components/navbar';
 import ListCategory from './_components/list-categories';
 import ListProduct from './_components/list-products';
 import ListBrand from './_components/list-brands';
+import Image from 'next/image';
 
 export default function LandingPage() {
   return (
@@ -14,7 +15,12 @@ export default function LandingPage() {
           <div className='flex flex-col gap-[30px]'>
             <div className='flex items-center gap-[10px] p-[8px_16px] rounded-full bg-white w-fit'>
               <div className='w-[22px] h-[22px] flex shrink-0'>
-                <img src='./assets/icons/crown.svg' alt='icon' />
+                <Image
+                  width={22}
+                  height={22}
+                  src='./assets/icons/crown.svg'
+                  alt='icon'
+                />
               </div>
               <p className='font-semibold text-sm'>
                 Most Popular 100th Product in Belanja
@@ -45,15 +51,19 @@ export default function LandingPage() {
             </div>
           </div>
           <div className='w-[588px] h-[360px] flex shrink-0 overflow-hidden relative'>
-            <img
-              src='assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png'
+            <Image
+              width={588}
+              height={360}
+              src='/./assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png'
               className='object-contain'
               alt='icon'
             />
             <div className='absolute top-[60%] bg-white p-[14px_16px] rounded-3xl flex items-center gap-[10px]'>
               <div className='w-12 h-12 flex shrink-0 rounded-full items-center justify-center bg-[#FFC736] overflow-hidden'>
-                <img
-                  src='assets/icons/code-circle.svg'
+                <Image
+                  height={48}
+                  width={48}
+                  src='./assets/icons/code-circle.svg'
                   className='w-6 h-6'
                   alt='icon'
                 />
@@ -64,7 +74,9 @@ export default function LandingPage() {
             </div>
             <div className='absolute right-0 top-[30%] bg-white p-[14px_16px] rounded-3xl flex flex-col items-center gap-[10px]'>
               <div className='w-12 h-12 flex shrink-0 rounded-full items-center justify-center bg-[#FFC736] overflow-hidden'>
-                <img
+                <Image
+                  width={48}
+                  height={48}
                   src='assets/icons/star-outline.svg'
                   className='w-6 h-6'
                   alt='icon'
@@ -79,8 +91,10 @@ export default function LandingPage() {
         <div className='container max-w-[1130px] mx-auto flex items-center justify-center gap-10 mt-[50px]'>
           <div className='flex items-center gap-[10px]'>
             <div className='w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden'>
-              <img
-                src='assets/photos/p1.png'
+              <Image
+                width={40}
+                height={40}
+                src='/assets/photos/p1.png'
                 className='w-full h-full object-cover'
                 alt='photo'
               />
@@ -94,8 +108,10 @@ export default function LandingPage() {
           </div>
           <div className='flex items-center gap-[10px]'>
             <div className='w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden'>
-              <img
-                src='assets/photos/p2.png'
+              <Image
+                width={40}
+                height={40}
+                src='/assets/photos/p2.png'
                 className='w-full h-full object-cover'
                 alt='photo'
               />
@@ -109,8 +125,10 @@ export default function LandingPage() {
           </div>
           <div className='flex items-center gap-[10px]'>
             <div className='w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden'>
-              <img
-                src='assets/photos/p3.png'
+              <Image
+                width={40}
+                height={40}
+                src='/assets/photos/p3.png'
                 className='w-full h-full object-cover'
                 alt='photo'
               />
@@ -124,8 +142,10 @@ export default function LandingPage() {
           </div>
           <div className='flex items-center gap-[10px]'>
             <div className='w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden'>
-              <img
-                src='assets/photos/p4.png'
+              <Image
+                width={40}
+                height={40}
+                src='/assets/photos/p4.png'
                 className='w-full h-full object-cover'
                 alt='photo'
               />
@@ -148,6 +168,8 @@ export default function LandingPage() {
         {/* End Category */}
         {/* Product */}
         <ListProduct
+          count={5}
+          type='products'
           title={
             <>
               Most Picked <br /> Quality Products
@@ -160,6 +182,8 @@ export default function LandingPage() {
         {/* End Brands */}
         {/* New Release */}
         <ListProduct
+          count={10}
+          type='release'
           title={
             <>
               New Releases <br /> From Official Stores

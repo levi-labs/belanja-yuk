@@ -23,3 +23,26 @@ export async function getCategory() {
     };
   }
 }
+
+export async function getProduct() {
+  try {
+    const products = await prisma.product.findMany({
+      select: {
+        name: true,
+        images: true,
+        price: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    return products;
+  } catch (error) {
+    console.error('Failed fetching products' + error);
+    return {
+      error: `Failed fetching  products ${error}`,
+    };
+  }
+}
