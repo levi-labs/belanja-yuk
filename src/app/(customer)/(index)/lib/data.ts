@@ -46,3 +46,20 @@ export async function getProduct() {
     };
   }
 }
+
+export async function getBrand() {
+  try {
+    const brands = await prisma.brand.findMany({
+      select: {
+        id: true,
+        logo: true,
+      },
+    });
+    return brands;
+  } catch (error) {
+    console.log('Failed fetching brands' + error);
+    return {
+      error: `Failed fetching brands ${error}`,
+    };
+  }
+}

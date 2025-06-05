@@ -13,7 +13,6 @@ interface ListProductProps {
 }
 export default function ListProduct({ type, title, count }: ListProductProps) {
   const { products, loading, error } = useProduct();
-  console.log(products);
 
   return (
     <div id='picked' className='flex flex-col gap-[30px]'>
@@ -30,7 +29,7 @@ export default function ListProduct({ type, title, count }: ListProductProps) {
         {loading && <CardProduct count={count} />}
         {Array.isArray(products) &&
           products.length > 0 &&
-          products.map((product, idx) => (
+          products.slice(0, count).map((product, idx) => (
             <Link
               key={product.name + idx}
               href='details.html'
@@ -51,7 +50,9 @@ export default function ListProduct({ type, title, count }: ListProductProps) {
                         ? product.name.slice(0, 15) + '...'
                         : product.name}
                     </p>
-                    <p className='text-sm text-[#616369]'>Desktops</p>
+                    <p className='text-sm text-[#616369]'>
+                      {product.category.name}
+                    </p>
                   </div>
                   <p className='font-semibold text-[#0D5CD7] leading-[22px]'>
                     {rupiahFormat(Number(product.price))}
