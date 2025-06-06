@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { getProduct } from '../lib/data';
-import { getProducts } from '@/app/(admin)/dashboard/(index)/products/lib/data';
 type Product = {
   name: string;
-  price: bigint;
-  images: string[];
-  category: { name: string };
+  price: number;
+  images: string;
+  category_name: string;
 };
 type ProductState = Product[] | { error: string };
 
-export function useProduct() {
+export function useProduct({ count = null }: { count: number | null }) {
   const [products, setProduct] = useState<ProductState>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | undefined>();
@@ -17,7 +16,7 @@ export function useProduct() {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const data = await getProduct();
+        const data = await getProduct(count);
         setProduct(data);
         setLoading(false);
       } catch (error: unknown) {

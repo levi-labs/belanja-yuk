@@ -4,6 +4,7 @@ import { getBrand } from '../lib/data';
 type BrandProps = {
   id: number;
   logo: string;
+  name: string;
 };
 export function useBrand() {
   const [brands, setBrands] = useState<BrandProps[] | { error: string }>([]);

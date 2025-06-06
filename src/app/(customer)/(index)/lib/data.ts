@@ -1,5 +1,11 @@
 'use server';
 import prisma from '../../../../../lib/prisma';
+type ProductType = {
+  name: string;
+  price: number;
+  images: string;
+  category_name: string;
+};
 
 export async function getCategory() {
   try {
@@ -24,9 +30,9 @@ export async function getCategory() {
   }
 }
 
-export async function getProduct() {
+export async function getProduct(count: number | null) {
   try {
-    const products = await prisma.product.findMany({
+    const query: any = {
       select: {
         name: true,
         images: true,
@@ -37,8 +43,19 @@ export async function getProduct() {
           },
         },
       },
-    });
-    return products;
+    };
+    if (count != null) query.take = count;
+
+    const products = await prisma.product.findMany(query);
+
+    const formatProducts: ProductType[] = products.map((product: any) => ({
+      name: product.name,
+      price: Number(product.price),
+      images: product.images[0],
+      category_name: product.category.name,
+    }));
+
+    return formatProducts;
   } catch (error) {
     console.error('Failed fetching products' + error);
     return {
@@ -53,6 +70,7 @@ export async function getBrand() {
       select: {
         id: true,
         logo: true,
+        name: true,
       },
     });
     return brands;
