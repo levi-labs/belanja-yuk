@@ -17,8 +17,8 @@ export default function ListCategory() {
     'assets/icons/monitor.svg',
     'assets/icons/cup.svg',
   ];
-  const { category, loading, error } = useCategory();
-  console.log(category, loading, error);
+  const { categories, loading, error } = useCategory();
+
   return (
     <div id='categories' className='flex flex-col gap-[30px]'>
       <div className='flex items-center justify-between'>
@@ -41,9 +41,9 @@ export default function ListCategory() {
             </h4>
           </>
         )}
-        {Array.isArray(category) &&
-          category.length > 0 &&
-          category.map((cat, idx) => (
+        {Array.isArray(categories) &&
+          categories.length > 0 &&
+          categories.map((cat, idx) => (
             <Link key={cat.name + cat.id} href='/' className='categories-card'>
               <div className='bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full'>
                 <div className='w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden'>

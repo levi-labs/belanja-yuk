@@ -81,3 +81,16 @@ export async function getBrand() {
     };
   }
 }
+
+export async function getLocation() {
+  try {
+    const locations = await prisma.location.findMany({});
+
+    return locations;
+  } catch (error) {
+    console.log('Failed fetching location' + error);
+    return {
+      error: `Failed fetching location ${error}`,
+    };
+  }
+}

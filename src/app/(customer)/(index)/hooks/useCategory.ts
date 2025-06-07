@@ -9,7 +9,7 @@ type Category = {
 };
 
 export function useCategory() {
-  const [category, setCategory] = useState<Category[] | { error: string }>(
+  const [categories, setCategories] = useState<Category[] | { error: string }>(
     [] as Category[]
   );
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ export function useCategory() {
     const fetchCategory = async () => {
       try {
         const data = await getCategory();
-        setCategory(data);
+        setCategories(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
           setError(error.message);
@@ -33,5 +33,5 @@ export function useCategory() {
     fetchCategory();
   }, []);
 
-  return { category, loading, error };
+  return { categories, loading, error };
 }

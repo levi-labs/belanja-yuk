@@ -12,7 +12,7 @@ import ListingProduct from './_components/listing-product';
 export default function CatalogPage() {
   return (
     <>
-      <header className='bg-[#EFF3FA] pt-[30px] h-[32vh] -mb-[181px]'>
+      <header className='bg-[#EFF3FA] pt-[30px] h-[35vh] -mb-[181px]'>
         <Navbar />
       </header>
       <div
