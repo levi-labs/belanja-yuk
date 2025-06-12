@@ -1,10 +1,15 @@
 'use server';
+import { Prisma, Product } from '@prisma/client';
 import prisma from '../../../../../lib/prisma';
-type ProductType = {
+import { TProduct } from '@/types';
+
+type ProductWithCategoryName = {
   name: string;
   price: number;
   images: string;
-  category_name: string;
+  category: {
+    name: string;
+  }; // tergantung apakah category bisa null
 };
 
 export async function getCategory() {
@@ -32,23 +37,23 @@ export async function getCategory() {
 
 export async function getProduct(count: number | null) {
   try {
-    const query: any = {
+    const products = await prisma.product.findMany({
       select: {
+        id: true,
         name: true,
         images: true,
         price: true,
         category: {
           select: {
+            id: true,
             name: true,
           },
         },
       },
-    };
-    if (count != null) query.take = count;
+      ...(count ? { take: count } : {}),
+    });
 
-    const products = await prisma.product.findMany(query);
-
-    const formatProducts: ProductType[] = products.map((product: any) => ({
+    const formatProducts: TProduct[] = products.map((product) => ({
       name: product.name,
       price: Number(product.price),
       images: product.images[0],

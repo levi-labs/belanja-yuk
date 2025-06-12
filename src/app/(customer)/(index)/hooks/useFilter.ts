@@ -2,10 +2,10 @@ import { ProductStock } from '@prisma/client';
 import { create } from 'zustand';
 
 export type TFilter = {
-  search: string;
-  minPrice: number;
-  maxPrice: number;
-  stock: ProductStock[] | null;
+  search?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  stock?: ProductStock[] | null;
   brands?: number[] | null;
   locations?: number[] | null;
   categories?: number[] | null;

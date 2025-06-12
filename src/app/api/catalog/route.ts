@@ -1,6 +1,14 @@
 import { Prisma } from '@prisma/client';
 import prisma from '../../../../lib/prisma';
+import { getImageUrl } from '@/lib/supabase';
 
+type TProduct = {
+  id: number;
+  image_url: string;
+  name: string;
+  category_name: string;
+  price: number;
+};
 export async function POST(request: Request) {
   try {
     const res = await request.json();
@@ -75,8 +83,20 @@ export async function POST(request: Request) {
         price: true,
       },
     });
+
+    const response: TProduct[] = products.map((product) => {
+      return {
+        id: product.id,
+        category_name: product.category.name,
+        image_url: getImageUrl(product.images[0], 'products'),
+        name: product.name,
+        price: Number(product.price),
+      };
+    });
+
+    return Response.json(response);
   } catch (error) {
     console.log('error');
-    return error;
+    return Response.json({ status: false }, { status: 500 });
   }
 }

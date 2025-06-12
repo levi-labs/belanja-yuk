@@ -12,7 +12,7 @@ interface ListProductProps {
   count: number;
 }
 export default function ListProduct({ type, title, count }: ListProductProps) {
-  const { products, loading, error } = useProduct({ count });
+  const { products, loading } = useProduct({ count });
 
   return (
     <div id='picked' className='flex flex-col gap-[30px]'>

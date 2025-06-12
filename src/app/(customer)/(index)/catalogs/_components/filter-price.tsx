@@ -1,15 +1,32 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFilter } from '../../hooks/useFilter';
 export default function FilterPrice() {
-  const [minPrice, setMinPrice] = useState(0);
+  const setFilter = useFilter((state) => state.setFilter);
+  const [minPrice, setMinPrice] = useState<number>(0);
   const [minMaxPrice, setMinMaxPrice] = useState(minPrice);
-  const [maxPrice, setMaxPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
 
   const handleMinMaximalPrice = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: string
   ) => {
-    setMinMaxPrice(Number(event.target.value));
+    if (type == 'min') {
+      setMinPrice(Number(event.target.value));
+      setMinMaxPrice(Number(event.target.value));
+    } else {
+      setMaxPrice(Number(event.target.value));
+    }
   };
+
+  useEffect(() => {
+    const debounceInput = setTimeout(() => {
+      setFilter({ minPrice: minPrice, maxPrice: maxPrice });
+    }, 1500);
+
+    return () => clearTimeout(debounceInput);
+  }, [minPrice, maxPrice, setFilter]);
+
   return (
     <div className='flex flex-col gap-[14px]'>
       <p className='font-semibold leading-[22px]'>Range Price</p>
@@ -19,7 +36,7 @@ export default function FilterPrice() {
         </div>
         <input
           min={0}
-          onChange={handleMinMaximalPrice}
+          onChange={(e) => handleMinMaximalPrice(e, 'min')}
           type='number'
           id='min_price'
           name='min_price'
@@ -38,6 +55,7 @@ export default function FilterPrice() {
           name='max_price'
           className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black'
           placeholder='Maximum price'
+          onChange={(e) => handleMinMaximalPrice(e, 'max')}
         />
       </div>
     </div>

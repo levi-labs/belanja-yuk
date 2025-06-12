@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getProduct } from '../lib/data';
-type Product = {
-  name: string;
-  price: number;
-  images: string;
-  category_name: string;
-};
-type ProductState = Product[] | { error: string };
+import { TProduct } from '@/types';
+
+type ProductState = TProduct[] | { error: string };
 
 export function useProduct({ count = null }: { count: number | null }) {
   const [products, setProduct] = useState<ProductState>();
@@ -30,7 +26,7 @@ export function useProduct({ count = null }: { count: number | null }) {
       }
     };
     getProducts();
-  }, []);
+  }, [count]);
 
   return { products, loading, error };
 }

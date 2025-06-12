@@ -6,9 +6,9 @@ type LocationTypeHook = {
   name: string;
 };
 
-interface LocationInterfaceHook {
-  location: LocationTypeHook[];
-}
+// interface LocationInterfaceHook {
+//   location: LocationTypeHook[];
+// }
 export function useLocation() {
   const [locations, setLocations] = useState<
     LocationTypeHook[] | { error: string }
@@ -34,7 +34,7 @@ export function useLocation() {
       }
     };
     fetchLocation();
-  });
+  }, []);
 
   return {
     locations,

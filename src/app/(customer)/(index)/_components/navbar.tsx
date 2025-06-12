@@ -13,6 +13,7 @@ export default async function Navbar() {
           height={30}
           src='./assets/logos/find-prices.svg'
           alt='icon'
+          style={{ height: '60px', width: '100px' }}
         />
         <h4 className='text-2xl font-extrabold text-white'>Cari Discount</h4>
       </div>

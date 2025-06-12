@@ -52,6 +52,7 @@ export default function ListCategory() {
                     height={23}
                     src={icons[idx]}
                     alt={`${cat.name} icon`}
+                    style={{ height: 'auto', width: 'auto' }}
                   />
                 </div>
                 <div className='flex flex-col gap-[2px]'>

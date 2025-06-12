@@ -9,3 +9,10 @@ export type Tparams = {
 export interface Tedit {
   params: Tparams;
 }
+
+export type TProduct = {
+  name: string;
+  price: number;
+  images: string;
+  category_name: string;
+};
