@@ -21,6 +21,8 @@ export default function FilterPrice() {
 
   useEffect(() => {
     const debounceInput = setTimeout(() => {
+      console.log(`Min Price: ${minPrice}, Max Price: ${maxPrice}`);
+
       setFilter({ minPrice: minPrice, maxPrice: maxPrice });
     }, 1500);
 

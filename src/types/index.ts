@@ -11,6 +11,7 @@ export interface Tedit {
 }
 
 export type TProduct = {
+  id: number;
   name: string;
   price: number;
   images: string;

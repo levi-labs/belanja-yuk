@@ -1,21 +1,33 @@
 import { Prisma } from '@prisma/client';
 import prisma from '../../../../lib/prisma';
 import { getImageUrl } from '@/lib/supabase';
+import { TProduct } from '@/types';
 
-type TProduct = {
-  id: number;
-  image_url: string;
-  name: string;
-  category_name: string;
-  price: number;
-};
+// type TProduct = {
+//   id: number;
+//   image_url: string;
+//   name: string;
+//   category_name: string;
+//   price: number;
+// };
+
+export async function GET() {
+  try {
+    return Response.json({
+      message: 'This is a GET request, please use POST to filter products.',
+    });
+  } catch (error) {
+    console.error('Error parsing URL parameters:', error);
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const res = await request.json();
 
     const ORQuery: Prisma.ProductWhereInput[] = [];
 
-    if (res.search != '') {
+    if (res.search && res.search != '') {
       ORQuery.push({
         name: {
           contains: res.search,
@@ -24,17 +36,11 @@ export async function POST(request: Request) {
       });
     }
 
-    if (res.minPrice && res.minPrice > 0) {
+    if (res.minPrice > 0 || res.maxPrice > 0) {
       ORQuery.push({
         price: {
-          gte: res.minPrice,
-        },
-      });
-    }
-    if (res.maxPrice && res.maxPrice > 0) {
-      ORQuery.push({
-        price: {
-          lte: res.maxPrice,
+          ...(res.minPrice > 0 ? { gte: Number(res.minPrice) } : {}),
+          ...(res.maxPrice > 0 ? { lte: Number(res.maxPrice) } : {}),
         },
       });
     }
@@ -42,7 +48,7 @@ export async function POST(request: Request) {
     if (res.stock && res.stock.length > 0) {
       ORQuery.push({
         stok: {
-          in: res.stok,
+          in: res.stock,
         },
       });
     }
@@ -61,7 +67,16 @@ export async function POST(request: Request) {
       ORQuery.push({
         location: {
           id: {
-            in: res.brands,
+            in: res.locations,
+          },
+        },
+      });
+    }
+    if (res.categories && res.categories.length > 0) {
+      ORQuery.push({
+        category: {
+          id: {
+            in: res.categories,
           },
         },
       });
@@ -88,7 +103,7 @@ export async function POST(request: Request) {
       return {
         id: product.id,
         category_name: product.category.name,
-        image_url: getImageUrl(product.images[0], 'products'),
+        images: getImageUrl(product.images[0], 'products'),
         name: product.name,
         price: Number(product.price),
       };
@@ -96,7 +111,7 @@ export async function POST(request: Request) {
 
     return Response.json(response);
   } catch (error) {
-    console.log('error');
+    console.log('error' + error);
     return Response.json({ status: false }, { status: 500 });
   }
 }

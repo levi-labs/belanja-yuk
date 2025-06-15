@@ -1,16 +1,6 @@
 'use server';
-import { Prisma, Product } from '@prisma/client';
 import prisma from '../../../../../lib/prisma';
 import { TProduct } from '@/types';
-
-type ProductWithCategoryName = {
-  name: string;
-  price: number;
-  images: string;
-  category: {
-    name: string;
-  }; // tergantung apakah category bisa null
-};
 
 export async function getCategory() {
   try {
@@ -54,6 +44,7 @@ export async function getProduct(count: number | null) {
     });
 
     const formatProducts: TProduct[] = products.map((product) => ({
+      id: product.id,
       name: product.name,
       price: Number(product.price),
       images: product.images[0],
@@ -62,7 +53,7 @@ export async function getProduct(count: number | null) {
 
     return formatProducts;
   } catch (error) {
-    console.error('Failed fetching products' + error);
+    console.log('Failed fetching products' + error);
     return {
       error: `Failed fetching  products ${error}`,
     };

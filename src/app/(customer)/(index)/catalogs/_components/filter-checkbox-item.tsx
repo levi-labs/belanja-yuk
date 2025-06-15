@@ -15,6 +15,8 @@ export default function FilterCheckBoxItem({
   const { filter, setFilter } = useFilter();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('onChange', e.target.value, 'type', e.target.checked);
+
     switch (type) {
       case 'stock':
         if (e.target.checked) {
@@ -77,7 +79,7 @@ export default function FilterCheckBoxItem({
       <input
         id={id + value}
         type='checkbox'
-        value={value}
+        value={id}
         onChange={onChange}
         className='w-6 h-6 flex shrink-0 appearance-none checked:border-[3px] checked:border-solid checked:border-white rounded-md checked:bg-[#0D5CD7] ring-1 ring-[#0D5CD7]'
       />
