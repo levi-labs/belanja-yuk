@@ -8,7 +8,7 @@ const flickityOptions = {
   pageDots: false,
   prevNextButtons: false,
 };
-export default function CarouselImage() {
+export default function CarouselImage({ images }: { images?: string[] }) {
   return (
     <div
       id='details-images'
@@ -22,7 +22,7 @@ export default function CarouselImage() {
         reloadOnUpdate // default false
         static // default false
       >
-        {[1, 2, 3, 4, 5].map((_, idx) => (
+        {images?.map((image, idx) => (
           <div
             key={idx}
             className='image-card pr-5 first-of-type:pl-[calc((100vw-1130px-20px)/2)] focus:border-none focus:outline-none'
@@ -31,7 +31,7 @@ export default function CarouselImage() {
               <Image
                 width={470}
                 height={350}
-                src='/assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png'
+                src={image}
                 className='w-full h-full object-contain'
                 alt='thumbnail'
                 loading='eager'

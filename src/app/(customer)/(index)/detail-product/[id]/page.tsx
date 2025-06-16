@@ -5,8 +5,21 @@ import CarouselImage from './_components/carousel-image';
 import ListProduct from '../../_components/list-products';
 import PriceInfo from './_components/price-info';
 import ReviewInfo from './_components/review-info';
+import { getProductById } from './lib/data';
+import { redirect } from 'next/navigation';
 
-export default function DetailProduct() {
+interface TDetailProduct {
+  params: {
+    id: string;
+  };
+}
+export default async function DetailProduct({ params }: TDetailProduct) {
+  const product = await getProductById(Number.parseInt(params.id));
+  console.log('Product Details:', product);
+  if (!product) {
+    return redirect('/404');
+  }
+
   return (
     <>
       <header className='bg-[#EFF3FA] pt-[30px] h-[480px] -mb-[310px]'>
@@ -30,9 +43,7 @@ export default function DetailProduct() {
               Details
             </a>
           </div>
-          <h1 className='font-bold text-4xl leading-9'>
-            iMac Pro Anniv Edition 100th
-          </h1>
+          <h1 className='font-bold text-4xl leading-9'>{product.name}</h1>
         </div>
         <div className='flex items-center gap-2 justify-end'>
           <div className='flex items-center'>
@@ -52,10 +63,10 @@ export default function DetailProduct() {
               <img src='/assets/icons/Star-gray.svg' alt='star' />
             </div>
           </div>
-          <p className='font-semibold'>(4,389)</p>
+          <p className='font-semibold'>{`(${product._count.orderProduct})`}</p>
         </div>
       </div>
-      <CarouselImage />
+      <CarouselImage images={product.images} />
       <div
         id='details-benefits'
         className='container max-w-[1130px] mx-auto flex items-center gap-[50px] justify-center mt-[50px]'
@@ -104,19 +115,20 @@ export default function DetailProduct() {
           <div id='about' className='flex flex-col gap-[10px]'>
             <h3 className='font-semibold'>About Product</h3>
             <p className='leading-[32px]'>
-              iMac brings incredible, room-filling audio to any space. Two pairs
+              {/* iMac brings incredible, room-filling audio to any space. Two pairs
               of force-cancelling woofers create rich, deep bass — and each is
               balanced with a high-performance tweeter for a massive soundstage
               that takes music, movies, and more to the next level. 12-Core CPU
               18-Core GPU 18GB Unified Memory 1TB SSD Storage¹ iMac also
               supports Spatial Audio with Dolby Atmos. And when you combine that
               with a 4.5K Retina display, its like bringing the whole theater
-              home.
+              home. */}
+              {product.description}
             </p>
           </div>
           <ReviewInfo />
         </div>
-        <PriceInfo />
+        <PriceInfo price={Number(product.price)} />
       </div>
       <div
         id='recommedations'
