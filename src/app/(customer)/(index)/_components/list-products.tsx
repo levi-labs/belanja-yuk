@@ -8,22 +8,29 @@ import { rupiahFormat } from '@/lib/utils';
 
 interface ListProductProps {
   title: ReactNode;
-  type: string;
+  isShowAll?: boolean;
+  type?: string;
   count: number;
 }
-export default function ListProduct({ type, title, count }: ListProductProps) {
+export default function ListProduct({
+  title,
+  count,
+  isShowAll = true,
+}: ListProductProps) {
   const { products, loading } = useProduct({ count });
 
   return (
     <div id='picked' className='flex flex-col gap-[30px]'>
       <div className='flex items-center justify-between'>
         <h2 className='font-bold text-2xl leading-[34px]'>{title}</h2>
-        <a
-          href='catalog.html'
-          className='p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold'
-        >
-          Explore All
-        </a>
+        {isShowAll && (
+          <Link
+            href='catalog.html'
+            className='p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold'
+          >
+            Explore All
+          </Link>
+        )}
       </div>
       <div className='grid grid-cols-5 gap-[30px]'>
         {loading && <CardProduct count={count} />}
@@ -32,7 +39,7 @@ export default function ListProduct({ type, title, count }: ListProductProps) {
           products.map((product, idx) => (
             <Link
               key={product.name + idx}
-              href='details.html'
+              href={`/detail-product/${product.id}`}
               className='product-card'
             >
               <div className='bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full'>

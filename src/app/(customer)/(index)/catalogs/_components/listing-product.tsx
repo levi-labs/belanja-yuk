@@ -31,7 +31,11 @@ export default function ListingProduct() {
         {Array.isArray(data) &&
           data.length > 0 &&
           data.map((product, idx) => (
-            <Link key={product.name + idx} href='/' className='product-card'>
+            <Link
+              key={product.name + idx}
+              href={`/detail-product/${product.id}`}
+              className='product-card'
+            >
               <div className='bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full'>
                 <div className='w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden'>
                   <Image
