@@ -7,6 +7,7 @@ import PriceInfo from './_components/price-info';
 import ReviewInfo from './_components/review-info';
 import { getProductById } from './lib/data';
 import { redirect } from 'next/navigation';
+import { getUser } from '@/lib/auth';
 
 interface TDetailProduct {
   params: {
@@ -14,8 +15,9 @@ interface TDetailProduct {
   };
 }
 export default async function DetailProduct({ params }: TDetailProduct) {
+  const { session } = await getUser();
   const product = await getProductById(Number.parseInt(params.id));
-  console.log('Product Details:', product);
+
   if (!product) {
     return redirect('/404');
   }
@@ -128,7 +130,16 @@ export default async function DetailProduct({ params }: TDetailProduct) {
           </div>
           <ReviewInfo />
         </div>
-        <PriceInfo price={Number(product.price)} />
+        <PriceInfo
+          isLoggedIn={session ? true : false}
+          item={{
+            id: product.id,
+            name: product.name,
+            price: Number(product.price),
+            images: product.images[0],
+            category_name: product.category.name,
+          }}
+        />
       </div>
       <div
         id='recommedations'

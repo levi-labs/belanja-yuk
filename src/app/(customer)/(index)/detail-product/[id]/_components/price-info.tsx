@@ -1,14 +1,33 @@
+'use client';
 import { rupiahFormat } from '@/lib/utils';
 import React from 'react';
+import { useCart } from '../../../hooks/useCart';
+import { TCart, TProduct } from '@/types';
+import { useRouter } from 'next/navigation';
 
-export default function PriceInfo({ price }: { price: number }) {
+interface PriceInfoProps {
+  item: TProduct;
+  isLoggedIn?: boolean;
+}
+export default function PriceInfo({ item, isLoggedIn }: PriceInfoProps) {
+  const { addProduct } = useCart();
+  const router = useRouter();
+
+  const checkOut = () => {
+    const newCart: TCart = {
+      ...item,
+      quantity: 1,
+    };
+    addProduct(newCart);
+    router.push('/carts');
+  };
   return (
     <div className='w-[302px] flex flex-col shrink-0 gap-5 h-fit'>
       <div className='w-full bg-white border border-[#E5E5E5] flex flex-col gap-[30px] p-[30px] rounded-3xl'>
         <div className='flex flex-col gap-1'>
           <p className='font-semibold'>Brand New</p>
           <p className='font-bold text-[25px] leading-[48px]'>
-            {rupiahFormat(price)}
+            {rupiahFormat(item.price)}
           </p>
         </div>
         <div className='flex flex-col gap-4'>
@@ -44,12 +63,14 @@ export default function PriceInfo({ price }: { price: number }) {
           </div>
         </div>
         <div className='flex flex-col gap-3'>
-          <a
-            href='cart.html'
-            className='p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white'
+          <button
+            disabled={!isLoggedIn}
+            type='button'
+            onClick={checkOut}
+            className='p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white disabled:bg-[#E5E5E5] disabled:text-[#616369] disabled:cursor-not-allowed'
           >
             Add to Cart
-          </a>
+          </button>
           <a
             href=''
             className='p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]'

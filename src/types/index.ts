@@ -17,3 +17,5 @@ export type TProduct = {
   images: string;
   category_name: string;
 };
+
+export type TCart = TProduct & { quantity: number };

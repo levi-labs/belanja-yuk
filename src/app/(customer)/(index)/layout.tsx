@@ -9,5 +9,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <body className={poppins.className}>{children}</body>;
+  return <div className={poppins.className}>{children}</div>;
 }
