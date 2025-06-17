@@ -34,7 +34,7 @@ export default async function Navbar() {
       <div className='flex items-center gap-3'>
         {session && user.role === 'customer' ? (
           <>
-            <Link href='cart.html'>
+            <Link href='/carts'>
               <div className='w-12 h-12 flex shrink-0'>
                 <img src='/assets/icons/cart.svg' alt='icon' />
               </div>
