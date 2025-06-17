@@ -15,6 +15,20 @@ export const useCart = create<CartState>()(
       products: [],
       addProduct: (cart) =>
         set({
+          // set(state) => {
+          // If the product already exists, update its quantity
+          //  const existingProduct = state.products.find((item) => item.id === cart.id);
+
+          // if (existingProduct) {
+          //   // Jika produk sudah ada, update quantity
+          //   return {
+          //     products: state.products.map((item) =>
+          //       item.id === cart.id
+          //         ? { ...item, quantity: item.quantity + cart.quantity }
+          //         : item
+          //     ),
+          //   };
+          // }
           products: [
             ...get().products.filter((item) => item.id !== cart.id),
             cart,

@@ -106,3 +106,46 @@ export const schemaSignUp = schemaSignIn.extend({
       message: 'Name should have min 4 characters',
     }),
 });
+
+export const schemaShippingAddress = z.object({
+  name: z
+    .string({
+      required_error: 'Name is required',
+    })
+    .min(4, {
+      message: 'Name should have min 4 characters',
+    }),
+  address: z
+    .string({
+      required_error: 'Address is required',
+    })
+    .min(10, {
+      message: 'Address should have min 10 characters',
+    }),
+  phone: z
+    .string({
+      required_error: 'Phone is required',
+    })
+    .min(10, {
+      message: 'Phone should have min 10 characters',
+    })
+    .max(15, {
+      message: 'Phone should have max 15 characters',
+    }),
+  postal_code: z
+    .string({
+      required_error: 'Postal Code is required',
+    })
+    .min(5, {
+      message: 'Postal code should have min 5 characters',
+    }),
+
+  city: z
+    .string({
+      required_error: 'City is required',
+    })
+    .min(3, {
+      message: 'City should have min 3 characters',
+    }),
+  notes: z.string().optional().nullable().default(''),
+});

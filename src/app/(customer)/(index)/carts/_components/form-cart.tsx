@@ -1,9 +1,51 @@
-import React from 'react';
+'use client';
+import React, { useMemo } from 'react';
+import { useCart } from '../../hooks/useCart';
+import { rupiahFormat } from '@/lib/utils';
+import { useFormState, useFormStatus } from 'react-dom';
+import { storeOrder } from '../lib/action';
+import { ActionResult } from '@/types';
+
+const initialState: ActionResult = {
+  error: '',
+};
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      type='submit'
+      className='p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white'
+    >
+      {pending ? 'Loading...' : 'Checkout Now'}
+    </button>
+  );
+};
 
 export default function FormCart() {
+  const { products } = useCart();
+
+  const grandTotal = useMemo(() => {
+    return products.reduce(
+      (prev: number, curr) => prev + curr.price * curr.quantity,
+      0
+    );
+  }, [products]);
+  const storeOrderParams = (_: unknown, formData: FormData) =>
+    storeOrder(_, formData, grandTotal, products);
+  const [, formAction] = useFormState(storeOrderParams, initialState);
+
+  const totalInsurance = useMemo(() => {
+    return grandTotal * 0.05;
+  }, [grandTotal]);
+
+  const ppn = useMemo(() => {
+    return grandTotal * 0.11;
+  }, [grandTotal]);
   return (
     <form
-      action=''
+      action={formAction}
       id='checkout-info'
       className='container max-w-[1130px] mx-auto flex justify-between gap-5 mt-[50px] pb-[100px]'
     >
@@ -18,8 +60,8 @@ export default function FormCart() {
             </div>
             <input
               type='text'
-              id=''
-              name=''
+              id='name'
+              name='name'
               className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black'
               placeholder='Write your real complete name'
             />
@@ -30,8 +72,8 @@ export default function FormCart() {
             </div>
             <input
               type='text'
-              id=''
-              name=''
+              id='address'
+              name='address'
               className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black'
               placeholder='Write your active house address'
             />
@@ -43,8 +85,8 @@ export default function FormCart() {
               </div>
               <input
                 type='text'
-                id=''
-                name=''
+                id='city'
+                name='city'
                 className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black'
                 placeholder='City'
               />
@@ -56,7 +98,7 @@ export default function FormCart() {
               <input
                 type='number'
                 id=''
-                name=''
+                name='postal_code'
                 className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black'
                 placeholder='Post code'
               />
@@ -67,7 +109,7 @@ export default function FormCart() {
               <img src='/assets/icons/note.svg' alt='icon' />
             </div>
             <textarea
-              name=''
+              name='notes'
               id=''
               className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black resize-none'
               rows={6}
@@ -81,7 +123,7 @@ export default function FormCart() {
             <input
               type='tel'
               id=''
-              name=''
+              name='phones'
               className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black'
               placeholder='Write your phone number or whatsapp'
             />
@@ -115,7 +157,7 @@ export default function FormCart() {
                 </div>
                 <p>Sub Total</p>
               </div>
-              <p className='font-semibold'>Rp 50.000.000</p>
+              <p className='font-semibold'>{rupiahFormat(grandTotal)}</p>
             </div>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
@@ -124,7 +166,7 @@ export default function FormCart() {
                 </div>
                 <p>Insurance 12%</p>
               </div>
-              <p className='font-semibold'>Rp 18.389.492</p>
+              <p className='font-semibold'>{rupiahFormat(totalInsurance)}</p>
             </div>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
@@ -151,22 +193,18 @@ export default function FormCart() {
                 </div>
                 <p>PPN 11%</p>
               </div>
-              <p className='font-semibold'>Rp 123.489.333</p>
+              <p className='font-semibold'>{rupiahFormat(ppn)}</p>
             </div>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='font-semibold'>Grand Total</p>
             <p className='font-bold text-[32px] leading-[48px] underline text-[#0D5CD7]'>
-              Rp 18.498.492.444
+              {rupiahFormat(grandTotal)}
             </p>
           </div>
+
           <div className='flex flex-col gap-3'>
-            <a
-              href=''
-              className='p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white'
-            >
-              Checkout Now
-            </a>
+            <SubmitButton />
             <a
               href=''
               className='p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]'
