@@ -123,7 +123,7 @@ export default function FormCart() {
             <input
               type='tel'
               id=''
-              name='phones'
+              name='phone'
               className='appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black'
               placeholder='Write your phone number or whatsapp'
             />
